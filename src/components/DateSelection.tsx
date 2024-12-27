@@ -5,24 +5,23 @@ import TimePicker from "react-multi-date-picker/plugins/time_picker";
 import "react-multi-date-picker/styles/colors/purple.css";
 import "react-multi-date-picker/styles/backgrounds/bg-dark.css";
 import { Box, Typography } from "@mui/material";
+import { handleGetDate, handleSetToISOString } from "../utils/utils";
 type DateSelectionProps = {
   label: string;
   value: DateObject | null;
   setValue: React.Dispatch<React.SetStateAction<DateObject | null>>;
-  getValueDate: (dateObject: DateObject | null) => DateObject | null;
-  handleSetDateToIsoStringDate: (date: Date) => void;
+  setIsoState: React.Dispatch<React.SetStateAction<string>>;
 };
 const DateSelection = ({
   label,
   value,
   setValue,
-  getValueDate,
-  handleSetDateToIsoStringDate,
+  setIsoState,
 }: DateSelectionProps) => {
   const handleChange = (date: DateObject) => {
     setValue(date);
-    const selectedDate = getValueDate(date)!.toDate();
-    handleSetDateToIsoStringDate(selectedDate);
+    const selectedDate = handleGetDate(date)!.toDate();
+    setIsoState(handleSetToISOString(selectedDate));
   };
 
   return (

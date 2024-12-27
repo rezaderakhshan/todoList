@@ -9,7 +9,6 @@ import {
 } from "@mui/material";
 import { useHandlingAddTodo } from "../hooks/hooks";
 import DateSelection from "./DateSelection";
-import { handleGetDate } from "../utils/utils";
 
 const TodoForm = () => {
   const {
@@ -21,9 +20,8 @@ const TodoForm = () => {
     setStartTodoDate,
     endTodoDate,
     setEndTodoDate,
-    // handleGetDate,
-    handleSetStartDateToIsoStringDate,
-    handleSetEndDateToIsoStringDate,
+    setIsoStringStartTodoDate,
+    setIsoStringEndTodoDate,
   } = useHandlingAddTodo();
 
   const theme = useTheme();
@@ -72,15 +70,13 @@ const TodoForm = () => {
             value={startTodoDate}
             setValue={setStartTodoDate}
             label="شروع"
-            getValueDate={handleGetDate}
-            handleSetDateToIsoStringDate={handleSetStartDateToIsoStringDate}
+            setIsoState={setIsoStringStartTodoDate}
           />
           <DateSelection
             value={endTodoDate}
             setValue={setEndTodoDate}
             label="پایان"
-            getValueDate={handleGetDate}
-            handleSetDateToIsoStringDate={handleSetEndDateToIsoStringDate}
+            setIsoState={setIsoStringEndTodoDate}
           />
         </Box>
       </Box>

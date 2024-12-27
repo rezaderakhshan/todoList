@@ -9,3 +9,7 @@ export const handleGetDate = (
     return null;
   }
 };
+
+export const handleSetToISOString = (date: Date): string => {
+  return date.toISOString();
+};

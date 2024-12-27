@@ -17,13 +17,6 @@ export const useHandlingAddTodo = () => {
   const [isoStringEndTodoDate, setIsoStringEndTodoDate] = useState("");
   const dispatch = useAppDispatch();
   const todos = useAppSelector(selectTodos);
-  const handleSetStartDateToIsoStringDate = (date: Date) => {
-    setIsoStringStartTodoDate(date.toISOString());
-  };
-
-  const handleSetEndDateToIsoStringDate = (date: Date) => {
-    setIsoStringEndTodoDate(date.toISOString());
-  };
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
@@ -73,8 +66,8 @@ export const useHandlingAddTodo = () => {
     setStartTodoDate,
     endTodoDate,
     setEndTodoDate,
-    handleSetStartDateToIsoStringDate,
-    handleSetEndDateToIsoStringDate,
+    setIsoStringStartTodoDate,
+    setIsoStringEndTodoDate,
   };
 };
 

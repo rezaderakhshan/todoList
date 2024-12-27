@@ -110,8 +110,8 @@ const Todo = ({ todo, todos }: TodoProps) => {
               {todoLabel}
             </Typography>
             <Box sx={{ display: "flex", flexDirection: "column" }}>
-              <TodoDateTime iso={startTodoDate as string} />
-              <TodoDateTime iso={endTodoDate as string} />
+              <TodoDateTime iso={startTodoDate} />
+              <TodoDateTime iso={endTodoDate} />
             </Box>
           </Box>
         ) : (

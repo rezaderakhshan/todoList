@@ -20,6 +20,9 @@ const TodoForm = () => {
     setStartTodoDate,
     endTodoDate,
     setEndTodoDate,
+    handleGetDate,
+    handleSetStartDateToIsoStringDate,
+    handleSetEndDateToIsoStringDate,
   } = useHandlingAddTodo();
 
   const theme = useTheme();
@@ -68,11 +71,15 @@ const TodoForm = () => {
             value={startTodoDate}
             setValue={setStartTodoDate}
             label="شروع"
+            getValueDate={handleGetDate}
+            handleSetDateToIsoStringDate={handleSetStartDateToIsoStringDate}
           />
           <DateSelection
             value={endTodoDate}
             setValue={setEndTodoDate}
             label="پایان"
+            getValueDate={handleGetDate}
+            handleSetDateToIsoStringDate={handleSetEndDateToIsoStringDate}
           />
         </Box>
       </Box>

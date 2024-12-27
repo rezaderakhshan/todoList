@@ -11,18 +11,27 @@ export const useAppSelector = useSelector.withTypes<RootState>();
 export const useHandlingAddTodo = () => {
   const [value, setValue] = useState("");
   const [error, setError] = useState("");
-  const [startTodoDate, setStartTodoDate] = useState<DateObject | string>("");
-  const [endTodoDate, setEndTodoDate] = useState<DateObject | string>("");
+  const [startTodoDate, setStartTodoDate] = useState<DateObject | null>(null);
+  const [endTodoDate, setEndTodoDate] = useState<DateObject | null>(null);
+  const [isoStringStartTodoDate, setIsoStringStartTodoDate] = useState("");
+  const [isoStringEndTodoDate, setIsoStringEndTodoDate] = useState("");
   const dispatch = useAppDispatch();
   const todos = useAppSelector(selectTodos);
 
-  const handleGetDate = (
-    dateObject: DateObject | string | null
-  ): DateObject | string => {
+  const handleGetDate = (dateObject: DateObject | null): DateObject | null => {
     if (dateObject instanceof DateObject) {
-      return dateObject ? dateObject.toDate().toISOString() : "";
+      return dateObject;
+    } else {
+      return null;
     }
-    return "";
+  };
+
+  const handleSetStartDateToIsoStringDate = (date: Date) => {
+    setIsoStringStartTodoDate(date.toISOString());
+  };
+
+  const handleSetEndDateToIsoStringDate = (date: Date) => {
+    setIsoStringEndTodoDate(date.toISOString());
   };
 
   const handleInputChange = (
@@ -40,8 +49,8 @@ export const useHandlingAddTodo = () => {
     dispatch(
       addTodo({
         value,
-        startTodoDate: handleGetDate(startTodoDate),
-        endTodoDate: handleGetDate(endTodoDate),
+        startTodoDate: isoStringStartTodoDate,
+        endTodoDate: isoStringEndTodoDate,
       })
     );
     if (todos?.length) {
@@ -60,8 +69,8 @@ export const useHandlingAddTodo = () => {
       );
     }
     setValue("");
-    setEndTodoDate("");
-    setStartTodoDate("");
+    setEndTodoDate(null);
+    setStartTodoDate(null);
   };
 
   return {
@@ -73,6 +82,9 @@ export const useHandlingAddTodo = () => {
     setStartTodoDate,
     endTodoDate,
     setEndTodoDate,
+    handleGetDate,
+    handleSetStartDateToIsoStringDate,
+    handleSetEndDateToIsoStringDate,
   };
 };
 

@@ -7,12 +7,22 @@ import "react-multi-date-picker/styles/backgrounds/bg-dark.css";
 import { Box, Typography } from "@mui/material";
 type DateSelectionProps = {
   label: string;
-  value: DateObject | string;
-  setValue: React.Dispatch<React.SetStateAction<DateObject | string>>;
+  value: DateObject | null;
+  setValue: React.Dispatch<React.SetStateAction<DateObject | null>>;
+  getValueDate: (dateObject: DateObject | null) => DateObject | null;
+  handleSetDateToIsoStringDate: (date: Date) => void;
 };
-const DateSelection = ({ label, value, setValue }: DateSelectionProps) => {
+const DateSelection = ({
+  label,
+  value,
+  setValue,
+  getValueDate,
+  handleSetDateToIsoStringDate,
+}: DateSelectionProps) => {
   const handleChange = (date: DateObject) => {
     setValue(date);
+    const selectedDate = getValueDate(date)!.toDate();
+    handleSetDateToIsoStringDate(selectedDate);
   };
 
   return (

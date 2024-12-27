@@ -1,7 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { sortValue, Ttodo, type todoInitialState } from "../../types/types";
 import { RootState } from "../../store";
-import { DateObject } from "react-multi-date-picker";
 const savedTodos = localStorage.getItem("todos");
 const initialState: todoInitialState = {
   todos: savedTodos ? JSON.parse(savedTodos) : [],
@@ -10,8 +9,8 @@ const initialState: todoInitialState = {
 
 type TAddTodo = {
   value: string;
-  startTodoDate: DateObject | string;
-  endTodoDate: string | DateObject;
+  startTodoDate: string;
+  endTodoDate: string;
 };
 
 export const todoSlice = createSlice({
@@ -39,6 +38,7 @@ export const todoSlice = createSlice({
         }
       });
     },
+
     sortingTodo: (state, action: PayloadAction<sortValue>) => {
       state.sortBy = action.payload;
     },

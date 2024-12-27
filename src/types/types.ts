@@ -1,11 +1,9 @@
-import { DateObject } from "react-multi-date-picker";
-
 export type Ttodo = {
   todoLabel: string;
   isDone: boolean;
   id: number;
-  startTodoDate: string | DateObject;
-  endTodoDate: string | DateObject;
+  startTodoDate: string;
+  endTodoDate: string;
 };
 
 export type sortValue = "all" | "in progress" | "done";

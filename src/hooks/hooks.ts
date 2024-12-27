@@ -17,15 +17,6 @@ export const useHandlingAddTodo = () => {
   const [isoStringEndTodoDate, setIsoStringEndTodoDate] = useState("");
   const dispatch = useAppDispatch();
   const todos = useAppSelector(selectTodos);
-
-  const handleGetDate = (dateObject: DateObject | null): DateObject | null => {
-    if (dateObject instanceof DateObject) {
-      return dateObject;
-    } else {
-      return null;
-    }
-  };
-
   const handleSetStartDateToIsoStringDate = (date: Date) => {
     setIsoStringStartTodoDate(date.toISOString());
   };
@@ -62,8 +53,8 @@ export const useHandlingAddTodo = () => {
             todoLabel: value,
             isDone: false,
             id: Math.random() * 1100,
-            startTodoDate: handleGetDate(startTodoDate),
-            endTodoDate: handleGetDate(endTodoDate),
+            startTodoDate,
+            endTodoDate,
           },
         ])
       );
@@ -82,7 +73,6 @@ export const useHandlingAddTodo = () => {
     setStartTodoDate,
     endTodoDate,
     setEndTodoDate,
-    handleGetDate,
     handleSetStartDateToIsoStringDate,
     handleSetEndDateToIsoStringDate,
   };

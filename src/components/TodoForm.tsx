@@ -9,6 +9,7 @@ import {
 } from "@mui/material";
 import { useHandlingAddTodo } from "../hooks/hooks";
 import DateSelection from "./DateSelection";
+import { handleGetDate } from "../utils/utils";
 
 const TodoForm = () => {
   const {
@@ -20,7 +21,7 @@ const TodoForm = () => {
     setStartTodoDate,
     endTodoDate,
     setEndTodoDate,
-    handleGetDate,
+    // handleGetDate,
     handleSetStartDateToIsoStringDate,
     handleSetEndDateToIsoStringDate,
   } = useHandlingAddTodo();

@@ -33,17 +33,6 @@ const TodoList = () => {
       maxWidth={"xl"}
       sx={{
         paddingBlock: 2,
-        overflow: "auto",
-        "&::-webkit-scrollbar": {
-          width: 10,
-          bgcolor: "red",
-        },
-        "&::-webkit-scrollbar-thumb": {
-          borderRadius: "12px",
-          bgcolor: "#3E1671",
-        },
-        scrollbarWidth: "thin",
-        scrollbarColor: "#3E1671 transparent",
       }}
     >
       {filteredTodos.length > 0 ? (

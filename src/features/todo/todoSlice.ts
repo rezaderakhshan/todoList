@@ -1,10 +1,15 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { sortValue, Ttodo, type todoInitialState } from "../../types/types";
+import {
+  type sortValue,
+  type Ttodo,
+  type todoInitialState,
+} from "../../types/types";
 import { RootState } from "../../store";
 const savedTodos = localStorage.getItem("todos");
 const initialState: todoInitialState = {
   todos: savedTodos ? JSON.parse(savedTodos) : [],
   sortBy: "all",
+  isoStringFilterDate: "",
 };
 
 type TAddTodo = {
@@ -42,14 +47,25 @@ export const todoSlice = createSlice({
     sortingTodo: (state, action: PayloadAction<sortValue>) => {
       state.sortBy = action.payload;
     },
+
     updateTodo: (state, action: PayloadAction<Ttodo[]>) => {
       state.todos = action.payload;
+    },
+
+    setIsoStateFilterDate: (state, action: PayloadAction<string>) => {
+      state.isoStringFilterDate = action.payload;
     },
   },
 });
 
-export const { addTodo, removeTodo, finishedTodo, sortingTodo, updateTodo } =
-  todoSlice.actions;
+export const {
+  addTodo,
+  removeTodo,
+  finishedTodo,
+  sortingTodo,
+  updateTodo,
+  setIsoStateFilterDate,
+} = todoSlice.actions;
 export const selectTodos = (state: RootState) => state.todo.todos;
 export const selectSortBy = (state: RootState) => state.todo.sortBy;
 export default todoSlice.reducer;

@@ -4,10 +4,7 @@ export const theme = createTheme({
   direction: "rtl",
   typography: {
     h1: { fontSize: 60, fontWeight: 900, color: "#9E78CF" },
-    h2: { color: "#FD4312", fontSize: 36, fontWeight: 900 },
-    h3: { fontSize: 24, fontWeight: 700, color: "#FFFEFEF2" },
-    subtitle1: { fontSize: 24, fontWeight: 700, color: "#FFFEFEF2" },
-    subtitle2: { fontSize: 16, color: "#F2F4F5", fontWeight: 600 },
+    h2: { color: "#9E78CF", fontSize: 25, fontWeight: 900 },
     body1: { fontSize: 18, color: "#9E78CF", fontWeight: 500 },
     body2: { fontSize: 17, color: "red", fontWeight: 700 },
     fontFamily: '"dana",  "sans-serif"',

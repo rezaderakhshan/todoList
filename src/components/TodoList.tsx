@@ -8,26 +8,7 @@ import {
 import { Ttodo } from "../types/types";
 import { useAppSelector } from "../hooks/hooks";
 import { useEffect, useState } from "react";
-
-const filterTodos = (
-  todos: Ttodo[],
-  sortBy: "done" | "in progress" | "all",
-  date: string
-) => {
-  return todos.filter((todo) => {
-    const statusMatch =
-      sortBy === "all" ||
-      (todo.isDone && sortBy === "done") ||
-      (!todo.isDone && sortBy === "in progress");
-
-    const dateMatch = date
-      ? todo.startTodoDate &&
-        todo.startTodoDate.split("T")[0] === date.split("T")[0]
-      : true;
-
-    return statusMatch && dateMatch;
-  });
-};
+import EmptyTodoMessage from "./EmptyTodoMessage";
 
 const TodoList = () => {
   const todos = useAppSelector(selectTodos) as Ttodo[];
@@ -65,18 +46,42 @@ const TodoList = () => {
         scrollbarColor: "#3E1671 transparent",
       }}
     >
-      <Grid2 container columns={12} spacing={2} columnSpacing={2}>
-        {filteredTodos?.map((todo: Ttodo) => (
-          <Grid2
-            key={todo.todoLabel}
-            size={{ xs: 12, sm: 6, md: 6, lg: 4, xl: 3 }}
-          >
-            <Todo todo={todo} todos={todos} />
-          </Grid2>
-        ))}
-      </Grid2>
+      {filteredTodos.length > 0 ? (
+        <Grid2 container columns={12} spacing={2} columnSpacing={2}>
+          {filteredTodos?.map((todo: Ttodo) => (
+            <Grid2
+              key={todo.todoLabel}
+              size={{ xs: 12, sm: 6, md: 6, lg: 4, xl: 3 }}
+            >
+              <Todo todo={todo} todos={todos} />
+            </Grid2>
+          ))}
+        </Grid2>
+      ) : (
+        <EmptyTodoMessage />
+      )}
     </Container>
   );
 };
 
 export default TodoList;
+
+function filterTodos(
+  todos: Ttodo[],
+  sortBy: "done" | "in progress" | "all",
+  date: string
+) {
+  return todos.filter((todo) => {
+    const statusMatch =
+      sortBy === "all" ||
+      (todo.isDone && sortBy === "done") ||
+      (!todo.isDone && sortBy === "in progress");
+
+    const dateMatch = date
+      ? todo.startTodoDate &&
+        todo.startTodoDate.split("T")[0] === date.split("T")[0]
+      : true;
+
+    return statusMatch && dateMatch;
+  });
+}

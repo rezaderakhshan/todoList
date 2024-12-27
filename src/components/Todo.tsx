@@ -1,18 +1,10 @@
 import { useEffect } from "react";
-import {
-  Box,
-  Checkbox,
-  IconButton,
-  Typography,
-  useMediaQuery,
-  useTheme,
-} from "@mui/material";
-import { Delete, Edit } from "@mui/icons-material";
+import { Box, useMediaQuery, useTheme } from "@mui/material";
 import { type Ttodo } from "../types/types";
-import { finishedTodo, removeTodo } from "../features/todo/todoSlice";
-import { useAppDispatch, useEditTask } from "../hooks/hooks";
+import { useEditTask } from "../hooks/hooks";
 import EditTask from "./EditTask";
-import TodoDateTime from "./TodoDateTime";
+import TodoActions from "./TodoActions";
+import TodoContent from "./TodoContent";
 
 type TodoProps = {
   todo: Ttodo;
@@ -23,8 +15,6 @@ const Todo = ({ todo, todos }: TodoProps) => {
   const { id, todoLabel, isDone, startTodoDate, endTodoDate } = todo;
 
   const theme = useTheme();
-  const dispatch = useAppDispatch();
-  const isMobileDevice = useMediaQuery(theme.breakpoints.down("sm"));
   const isLaptopDevice = useMediaQuery(theme.breakpoints.up("lg"));
   const isTabletDevice = useMediaQuery(theme.breakpoints.down("md"));
   const {
@@ -32,21 +22,10 @@ const Todo = ({ todo, todos }: TodoProps) => {
     handleChangeEditTask,
     handleCloseEditTask,
     isEditing,
-    handleChangeEditStatue,
+    handleChangeEditStatus,
     editValue,
     error,
   } = useEditTask({ todos, todo, id, todoLabel });
-
-  const handleRemoveTodo = (id: number) => {
-    dispatch(removeTodo(id));
-    const filteredTodos = todos?.filter((todo) => todo.id !== id);
-    localStorage.setItem("todos", JSON.stringify(filteredTodos));
-  };
-
-  const handleFinishedTodo = (id: number) => {
-    dispatch(finishedTodo(id));
-    localStorage.setItem("todos", JSON.stringify(todos));
-  };
 
   useEffect(() => {
     localStorage.setItem("todos", JSON.stringify(todos));
@@ -71,49 +50,22 @@ const Todo = ({ todo, todos }: TodoProps) => {
         },
       ]}
     >
-      {!isEditing ? (
-        <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
-          <IconButton onClick={() => handleRemoveTodo(id)}>
-            <Delete color="primary" />
-          </IconButton>
-          <IconButton onClick={handleChangeEditStatue}>
-            <Edit color="primary" />
-          </IconButton>
-          <Box>
-            <Checkbox
-              checked={isDone}
-              onChange={() => handleFinishedTodo(id)}
-              color="primary"
-              sx={{ "& svg": { fill: "#9E78CF" } }}
-            />
-          </Box>
-        </Box>
-      ) : null}
+      {!isEditing && (
+        <TodoActions
+          id={id}
+          todos={todos}
+          isDone={isDone}
+          handleChangeEditStatus={handleChangeEditStatus}
+        />
+      )}
       <Box sx={{ paddingInline: 2 }}>
         {!isEditing ? (
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-            }}
-          >
-            <Typography
-              sx={[
-                {
-                  textDecoration: isDone ? "line-through" : "unset",
-                  lineBreak: "anywhere",
-                },
-                isMobileDevice && { fontSize: 14 },
-              ]}
-            >
-              {todoLabel}
-            </Typography>
-            <Box sx={{ display: "flex", flexDirection: "column" }}>
-              <TodoDateTime iso={startTodoDate} />
-              <TodoDateTime iso={endTodoDate} />
-            </Box>
-          </Box>
+          <TodoContent
+            isDone={isDone}
+            todoLabel={todoLabel}
+            startTodoDate={startTodoDate}
+            endTodoDate={endTodoDate}
+          />
         ) : (
           <EditTask
             editValue={editValue}

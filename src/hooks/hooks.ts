@@ -89,7 +89,7 @@ export const useEditTask = ({
   const [isEditing, setIsEditing] = useState(false);
   const dispatch = useAppDispatch();
 
-  const handleChangeEditStatue = () => {
+  const handleChangeEditStatus = () => {
     setIsEditing((prev) => !prev);
   };
 
@@ -126,7 +126,7 @@ export const useEditTask = ({
     handleChangeEditTask,
     handleCloseEditTask,
     isEditing,
-    handleChangeEditStatue,
+    handleChangeEditStatus,
     editValue,
     error,
   };

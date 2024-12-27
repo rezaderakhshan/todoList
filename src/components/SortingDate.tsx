@@ -28,6 +28,7 @@ const SortingDate = () => {
         value={sortingDate}
         setValue={setSortingDate}
         setIsoState={setIsoSortingDate}
+        id="filter"
       />
       {isoSortingDate.length > 0 && (
         <IconButton

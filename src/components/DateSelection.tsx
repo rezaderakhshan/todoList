@@ -11,12 +11,14 @@ type DateSelectionProps = {
   value: DateObject | null;
   setValue: React.Dispatch<React.SetStateAction<DateObject | null>>;
   setIsoState: React.Dispatch<React.SetStateAction<string>>;
+  id: string;
 };
 const DateSelection = ({
   label,
   value,
   setValue,
   setIsoState,
+  id,
 }: DateSelectionProps) => {
   const handleChange = (date: DateObject) => {
     setValue(date);
@@ -26,11 +28,11 @@ const DateSelection = ({
 
   return (
     <>
-      <Box component={"label"} htmlFor="date">
+      <Box component={"label"} htmlFor={id}>
         <Typography>{label}</Typography>
       </Box>
       <DatePicker
-        id="date"
+        id={id}
         style={{ fontSize: "16px" }}
         className="purple bg-dark"
         value={value}

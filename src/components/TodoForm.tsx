@@ -71,12 +71,14 @@ const TodoForm = () => {
             setValue={setStartTodoDate}
             label="شروع"
             setIsoState={setIsoStringStartTodoDate}
+            id="start"
           />
           <DateSelection
             value={endTodoDate}
             setValue={setEndTodoDate}
             label="پایان"
             setIsoState={setIsoStringEndTodoDate}
+            id="end"
           />
         </Box>
       </Box>

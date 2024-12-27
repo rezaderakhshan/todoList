@@ -68,4 +68,6 @@ export const {
 } = todoSlice.actions;
 export const selectTodos = (state: RootState) => state.todo.todos;
 export const selectSortBy = (state: RootState) => state.todo.sortBy;
+export const selectIsoStringFilterDate = (state: RootState) =>
+  state.todo.isoStringFilterDate;
 export default todoSlice.reducer;

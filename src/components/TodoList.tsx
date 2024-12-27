@@ -1,24 +1,51 @@
 import { Container, Grid2 } from "@mui/material";
 import Todo from "./Todo";
-import { selectSortBy, selectTodos } from "../features/todo/todoSlice";
+import {
+  selectIsoStringFilterDate,
+  selectSortBy,
+  selectTodos,
+} from "../features/todo/todoSlice";
 import { Ttodo } from "../types/types";
 import { useAppSelector } from "../hooks/hooks";
+import { useEffect, useState } from "react";
+
+const filterTodos = (
+  todos: Ttodo[],
+  sortBy: "done" | "in progress" | "all",
+  date: string
+) => {
+  return todos.filter((todo) => {
+    const statusMatch =
+      sortBy === "all" ||
+      (todo.isDone && sortBy === "done") ||
+      (!todo.isDone && sortBy === "in progress");
+
+    const dateMatch = date
+      ? todo.startTodoDate &&
+        todo.startTodoDate.split("T")[0] === date.split("T")[0]
+      : true;
+
+    return statusMatch && dateMatch;
+  });
+};
 
 const TodoList = () => {
-  const todos = useAppSelector(selectTodos) || [];
-  let todosDepnedsOnSortBy;
+  const todos = useAppSelector(selectTodos) as Ttodo[];
   const sortBy = useAppSelector(selectSortBy);
-  if (sortBy === "all") {
-    todosDepnedsOnSortBy = todos;
-  }
+  const date = useAppSelector(selectIsoStringFilterDate);
+  const [filteredTodos, setFilteredTodos] = useState(todos);
 
-  if (sortBy === "done") {
-    todosDepnedsOnSortBy = todos?.filter((todo) => todo.isDone);
-  }
-
-  if (sortBy === "in progress") {
-    todosDepnedsOnSortBy = todos?.filter((todo) => !todo.isDone);
-  }
+  useEffect(() => {
+    const handleFilter = (
+      todos: Ttodo[],
+      sortBy: "done" | "in progress" | "all",
+      date: string
+    ) => {
+      const filtered = filterTodos(todos, sortBy, date);
+      setFilteredTodos(filtered);
+    };
+    handleFilter(todos, sortBy, date);
+  }, [date, sortBy, todos.length, todos]);
 
   return (
     <Container
@@ -39,7 +66,7 @@ const TodoList = () => {
       }}
     >
       <Grid2 container columns={12} spacing={2} columnSpacing={2}>
-        {todosDepnedsOnSortBy?.map((todo: Ttodo) => (
+        {filteredTodos?.map((todo: Ttodo) => (
           <Grid2
             key={todo.todoLabel}
             size={{ xs: 12, sm: 6, md: 6, lg: 4, xl: 3 }}
